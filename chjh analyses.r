@@ -1,17 +1,17 @@
 setwd("C:/Users/chjh/Dropbox/projects/2015head")
-source("FILES_FOR_DRYAD/1. TEXT_MINING/functions.r")
+source("chjh functions.r")
 
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
 journal.categories <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/journal.categories.csv", row.names=1)
 
-journal.categories$journal.name <- journal.categories$Abbreviation
-pdat <- merge(pdat, journal.categories,by="journal.name")
+# journal.categories$journal.name <- journal.categories$Abbreviation
+# pdat <- merge(pdat, journal.categories,by="journal.name")
 
 ###################################
 # Start selection 
 ###################################
 # Remove NA
-pdatHEAD  <- pdatHEAD [!is.na(pdatHEAD $p.value), ]
+pdatHEAD  <- pdatHEAD [!is.na(pdatHEAD$p.value), ]
 
 # Head et al selection 1
 # Get rid of papers that did not yield any p values
@@ -46,7 +46,7 @@ journal.categories$journal.name <- journal.categories$Abbreviation
 pdatHEAD <- merge(pdatHEAD, journal.categories,by="journal.name")
 
 # Head et al selection 6
-# "Include only exact p values which are less than 0.05"
+# Adjusted to <=, from <
 pdatHEAD <- pdatHEAD[pdatHEAD$p.value <= 0.05, ]
 
 # Head et al selection 7
@@ -55,13 +55,58 @@ pdatHEAD <- pdatHEAD[pdatHEAD$operator == "=", ]
 # End selection 
 ###################################
 
+pdatHEAD.results <- pdatHEAD[pdatHEAD$section == "results", ]
+pdatHEAD.abstracts <- pdatHEAD[pdatHEAD$section == "abstract", ]
+
+# Get rid of 'pdatHEAD' to save memory
+rm(pdatHEAD)
+
 ###################################
 # Rerunning alternative selection analyses
+# Only adjustment from original code is the renaming of objects
+# and adjusted the functions to include p <= .05
+# Code is thus almost literally from Head et al.
 ###################################
+# Remove excess factor levels from the datasets 
+# (there are plenty of empty ones, since we deleted some rows, 
+# and the empty levels would otherwise cause trouble later on)
+pdatHEADresults <- trim.levels(pdatHEAD.results)
+pdatHEADabstracts <- trim.levels(pdatHEAD.abstracts)
+
+##### Analysis on the entire dataset (i.e. not split by FoR category)
+reps <- 1000
+results.bias.test <- bootstrap.binomial.bias.test(pdatHEADresults, reps)
+abstract.bias.test <- bootstrap.binomial.bias.test(pdatHEADabstracts, reps)
+
+write.csv(results.bias.test, file="results/chjh.results.combinedata.csv")
+write.csv(abstract.bias.test, file="results/chjh.results.combinedata.abstracts.csv")
+
+
+###### Analyses split by FoR category
+results.FoR.test <- bootstrap.FoR.test(pdatHEADresults, reps)
+abstract.FoR.test <- bootstrap.FoR.test(pdatHEADabstracts, reps)
+
+write.csv(results.FoR.test, file="results/chjh.results.by.category.csv")
+write.csv(abstract.FoR.test, file="results/chjh.results.by.category.abstracts.csv")
 
 ###################################
 # End alternative selection analyses
 ###################################
+
+###################################
+# Start CHJH analyses
+###################################
+print(hist(pdatHEAD.results$p.value[pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value <= .05 & pdatHEAD.results$operator == "="], breaks = 2))
+
+
+
+
+
+
+
+
+
+
 
 
 # Binwidth .025
