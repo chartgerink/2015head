@@ -1,13 +1,9 @@
-In their original analyses, Head and colleagues use seven selection steps. First, they select only papers including NHST p-values. Second, only papers with a Digital Object Identifier (DOI) are retained. Third, only papers with p-values in the results section are retained. Fourth, only papers with non-zero authors are retained. Fifth, supplemental materials are removed. Sixth, only p-values smaller than .05 are retained (i.e., $<.05$). Finally, only exactly reported p-values are retained (i.e., $p=...$). Below, I evaluate their choices.
+In their original analyses, Head and colleagues use seven selection steps. First, they select only papers including NHST p-values. Second, only papers with a Digital Object Identifier (DOI) are retained. Third, only papers with p-values in the results section are retained. Fourth, only papers with non-zero authors are retained. Fifth, supplemental materials are removed. Sixth, only p-values smaller than .05 are retained (i.e., $<.05$). Finally, only exactly reported p-values are retained (i.e., $p=...$). Below, I evaluate four non-standard decisions that could affect the results, of which two seem valid (steps 4 and 7) and two seem invalid (steps 2 and 6).
 
-First, they select only papers including NHST p-values. 
+Step 4 includes the removal of zero-author papers.
 
-Second, only papers with a DOI are retained, which results in the elimination of $84409$ p-values. However, there seems no substantive reason to eliminate papers without a DOI. In fact, this only results in eliminating p-values from older articles. DOIs were initiated in 1999 \cite{crossref2009} and have been issued for older publications, but most likely not at the same coverage as post-1999 publications. In other words, such a selection 
+Step 7 retains only the exactly reported p-values.
 
-Third, only papers with p-values in the results section are retained. 
+Step 2 includes retaining only those papers with one DOI. Retaining only those papers with exactly one DOI results in the elimination of $84409$ p-values. However, there seems no substantive reason to eliminate papers without a DOI or with multiple DOIs. In fact, eliminating those without DOIs could result in eliminating p-values from older articles, considering DOIs were only initiated in 1999 \cite{crossref2009}. Upon inspecting some of the articles with multiple DOIs, these additional DOIs proved to be advanced online publications of the paper under a different DOI, or discussion papers that accompany the original paper. Retaining the papers with zero or $>1$ DOIs therefore seems warranted.
 
-Fourth, only papers with non-zero authors are retained. 
-
-Fifth, supplemental materials are removed. Sixth, only p-values smaller than .05 are retained (i.e., $<.05$). 
-
-Finally, only exactly reported p-values are retained (i.e., $p=...$). 
+Step 6 selects all p-values $<.05$, because the original authors "suspect that many authors do not regard $p=.05$ as significant" \cite{Head2015}. Manual inspection of p-values reported as exactly .05 revealed that $94.3\%$ of 236 cases interpret this as statistically significant. This goes against Head and colleagues their assumption, which is why I argue that the selection should be $p\leq.05$ and not $p<.05$.
