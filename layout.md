@@ -1,2 +1,2 @@
 Introduction.tex
-Evaluating data selection.tex
+Data analytic choices.tex
