@@ -1,4 +1,5 @@
 setwd("C:/Users/chjh/Dropbox/projects/2015head")
+source("FILES_FOR_DRYAD/1. TEXT_MINING/functions.r")
 
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
 journal.categories <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/journal.categories.csv", row.names=1)
@@ -6,23 +7,32 @@ journal.categories <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/journal.
 journal.categories$journal.name <- journal.categories$Abbreviation
 pdat <- merge(pdat, journal.categories,by="journal.name")
 
-###########################################
+###################################
+# Start selection 
+###################################
+# Remove NA
+pdatHEAD  <- pdatHEAD [!is.na(pdatHEAD $p.value), ]
+
+# Head et al selection 1
 # Get rid of papers that did not yield any p values
 pdatHEAD <- pdat[!is.na(pdat$p.value), ]
 
-# only keep papers with a single DOI (tyipcally we lose ~100K files here)
-# NB some papers really have 0 or >1 DOI
-pdatHEAD <- pdatHEAD[which(pdatHEAD$num.dois==1),]
+# Head et al selection 2
+# Removed due to arguments presented in paper
 
-# only keep papers for which we have >0 results sections (e.g. reviews and commentaries often have 0 results sections)
+# Head et al selection 3
+# "only keep papers for which we have >0 results sections (e.g. reviews and commentaries often have 0 results sections)"
 pdatHEAD <- pdatHEAD[which(pdatHEAD$num.results.sections > 0),]
 
-# some papers have (legitimately, I've checked) zero authors. Remove these.
+# Head et al selection 4
+# "some papers have (legitimately, I've checked) zero authors. Remove these."
 pdatHEAD <- pdatHEAD[which(pdatHEAD$num.authors>0),]
 
+# Head et al selection 5
 # some journals publish large 'supplements' that contain conference many short conference abstracts
 # (with results sections) in one file. Remove these
 pdatHEAD <- pdatHEAD[-c(grep("(Suppl)", pdatHEAD$file.name)),]
+
 
 # we have a few records in this dataset in which the journal.name wasn't extracted properly, we fix that here
 pdatHEAD$journal.name <- as.character(pdatHEAD$journal.name)
@@ -35,11 +45,24 @@ pdatHEAD$journal.name <- as.factor(pdatHEAD$journal.name)
 journal.categories$journal.name <- journal.categories$Abbreviation
 pdatHEAD <- merge(pdatHEAD, journal.categories,by="journal.name")
 
-# Include only exact p values which are less than 0.05
-pdatHEAD <- pdatHEAD[pdatHEAD$p.value < 0.05, ]
+# Head et al selection 6
+# "Include only exact p values which are less than 0.05"
+pdatHEAD <- pdatHEAD[pdatHEAD$p.value <= 0.05, ]
+
+# Head et al selection 7
 pdatHEAD <- pdatHEAD[pdatHEAD$operator == "=", ]
-#######################
-psel <- pdat$operator == "="
+###################################
+# End selection 
+###################################
+
+###################################
+# Rerunning alternative selection analyses
+###################################
+
+###################################
+# End alternative selection analyses
+###################################
+
 
 # Binwidth .025
 # Ours
