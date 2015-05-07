@@ -1,7 +1,7 @@
 Introduction.tex
 Data analytic choices.tex
 Sensitivity reanalysis.tex
-Head_and_colleagues_their_data__.tex
+Data analytic strategy.tex
 Placeholder__.tex
 Reevaluating_data_analytic_results__.tex
 Alternative_data_analytic_approach__.tex
