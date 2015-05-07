@@ -1,8 +1,8 @@
 In their original analyses, Head and colleagues use seven selection steps. First, they select only papers including NHST p-values. Second, only papers with a Digital Object Identifier (DOI) are retained. Third, only papers with p-values in the results section are retained. Fourth, only papers with non-zero authors are retained. Fifth, supplemental materials are removed. Sixth, only p-values smaller than .05 are retained (i.e., $<.05$). Finally, only exactly reported p-values are retained (i.e., $p=...$). Below, I evaluate four non-standard decisions that could affect the results, of which two seem valid (steps 4 and 7) and two seem invalid (steps 2 and 6).
 
-Step 4 includes the removal of zero-author papers.
+Step 4 includes the removal of zero-author papers, which is justifiable. Zero-author papers are most likely editorials, corrections, retractions, etc. These "papers" provide only little information and the p-values they do report are not original p-values but reproductions provided in another paper, most likely. Eliminating these therefore seems a wise choice.
 
-Step 7 retains only the exactly reported p-values.
+Step 7 retains only the exactly reported p-values, which eliminates potential significance threshold biases \cite[e.g.,][]{Ridley2007}. 
 
 Step 2 includes retaining only those papers with one DOI. Retaining only those papers with exactly one DOI results in the elimination of $84409$ p-values. However, there seems no substantive reason to eliminate papers without a DOI or with multiple DOIs. In fact, eliminating those without DOIs could result in eliminating p-values from older articles, considering DOIs were only initiated in 1999 \cite{Crossre2009}. Upon inspecting some of the articles with multiple DOIs, these additional DOIs proved to be advanced online publications of the paper under a different DOI, or discussion papers that accompany the original paper. Retaining the papers with zero or $>1$ DOIs therefore seems warranted.
 
