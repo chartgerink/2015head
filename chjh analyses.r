@@ -1,4 +1,4 @@
-setwd("C:/Users/chjh/Dropbox/projects/2015head")
+setwd("C:/Users/Chris/Dropbox/projects/2015head")
 source("chjh functions.r")
 
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
@@ -10,9 +10,6 @@ journal.categories <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/journal.
 ###################################
 # Start selection 
 ###################################
-# Remove NA
-pdatHEAD  <- pdatHEAD [!is.na(pdatHEAD$p.value), ]
-
 # Head et al selection 1
 # Get rid of papers that did not yield any p values
 pdatHEAD <- pdat[!is.na(pdat$p.value), ]
@@ -96,7 +93,11 @@ write.csv(abstract.FoR.test, file="results/chjh.results.by.category.abstracts.cs
 ###################################
 # Start CHJH analyses
 ###################################
+par(mfrow = c(2,2))
 print(hist(pdatHEAD.results$p.value[pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value <= .05 & pdatHEAD.results$operator == "="], breaks = 2))
+print(hist(pdatHEAD.results$p.value[pdatHEAD.results$p.value > .04 & pdatHEAD.results$p.value < .05 & pdatHEAD.results$operator == "="], breaks = 2))
+print(hist(pdatHEAD$p.value[pdatHEAD$p.value >= .04 & pdatHEAD$p.value <= .05 & pdatHEAD$operator == "="], breaks = 2))
+print(hist(pdatHEAD$p.value[pdatHEAD$p.value > .04 & pdatHEAD$p.value < .05 & pdatHEAD$operator == "="], breaks = 2))
 
 
 
