@@ -5,6 +5,6 @@ Data analytic strategy.tex
 figures/Fig1/Fig1.png
 Strong reanalysis.tex
 Conclusion.tex
-section_Acknowledgments_Joost_de_Winter__.tex
+Acknowledgments.tex
 Reevaluating_data_analytic_results__.tex
 Alternative_data_analytic_approach__.tex
