@@ -1,3 +1,8 @@
-"","lower.limit","binomial.bias.lower","binomial.bias.higher","binomial.bias.p"
-"1",0.03,4347,3774,2.15459936554255e-10
-"2",0.04,829,1897,2.69452299864392e-95
+Hartgerink,,,,
+,lower.limit,binomial.bias.lower,binomial.bias.higher,binomial.bias.p
+1,0.03,4347,3774,2.15E-10
+2,0.04,829,1897,2.69E-95
+Head,,,,
+,lower.limit,binomial.bias.lower,binomial.bias.higher,binomial.bias.p
+1,0.03,4312,3710,1.90E-11
+2,0.04,830,962,0.00196269

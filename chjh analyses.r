@@ -1,4 +1,4 @@
-setwd("C:/Users/Chris/Dropbox/projects/2015head")
+setwd("C:/Users/chjh/Dropbox/projects/2015head")
 source("chjh functions.r")
 
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
@@ -16,6 +16,13 @@ pdatHEAD <- pdat[!is.na(pdat$p.value), ]
 
 # Head et al selection 2
 # Removed due to arguments presented in paper
+# Below I just present the count of results and papers
+x <- pdatHEAD[which(!pdatHEAD$num.dois==1),]
+# Results eliminated
+dim(x)[1]
+# Number of unique sources eliminated
+length(unique(x$file.name))
+rm(x)
 
 # Head et al selection 3
 # "only keep papers for which we have >0 results sections (e.g. reviews and commentaries often have 0 results sections)"
@@ -54,21 +61,19 @@ pdatHEAD <- pdatHEAD[pdatHEAD$operator == "=", ]
 
 pdatHEAD.results <- pdatHEAD[pdatHEAD$section == "results", ]
 pdatHEAD.abstracts <- pdatHEAD[pdatHEAD$section == "abstract", ]
-
-# Get rid of 'pdatHEAD' to save memory
-rm(pdatHEAD)
-
-###################################
-# Rerunning alternative selection analyses
-# Only adjustment from original code is the renaming of objects
-# and adjusted the functions to include p <= .05
-# Code is thus almost literally from Head et al.
-###################################
 # Remove excess factor levels from the datasets 
 # (there are plenty of empty ones, since we deleted some rows, 
 # and the empty levels would otherwise cause trouble later on)
 pdatHEADresults <- trim.levels(pdatHEAD.results)
 pdatHEADabstracts <- trim.levels(pdatHEAD.abstracts)
+
+###################################
+# Start sensitivity reanalysis 
+###################################
+# Only adjustment from original code is the renaming of objects
+# and adjusted the functions to include p <= .05
+# Code is thus almost literally from Head et al.
+###################################
 
 ##### Analysis on the entire dataset (i.e. not split by FoR category)
 reps <- 1000
@@ -86,24 +91,32 @@ abstract.FoR.test <- bootstrap.FoR.test(pdatHEADabstracts, reps)
 write.csv(results.FoR.test, file="results/chjh.results.by.category.csv")
 write.csv(abstract.FoR.test, file="results/chjh.results.by.category.abstracts.csv")
 
-###################################
-# End alternative selection analyses
-###################################
+
+# Some additions from CHJH (CI Calculation)
+# CI from Head for p-hacking evidence in results section
+binom.test(x = 3120, n = (3120 + 2590), alternative = "greater")
+# CI Hartgerink for p-hacking evidence in results section
+binom.test(x = 7298, n = (7298 + 2692), alternative = "greater")
 
 ###################################
-# Start CHJH analyses
+# End sensitivity reanalysis 
 ###################################
-par(mfrow = c(2,2))
-print(hist(pdatHEAD.results$p.value[pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value <= .05 & pdatHEAD.results$operator == "="], breaks = 2))
-print(hist(pdatHEAD.results$p.value[pdatHEAD.results$p.value > .04 & pdatHEAD.results$p.value < .05 & pdatHEAD.results$operator == "="], breaks = 2))
-print(hist(pdatHEAD$p.value[pdatHEAD$p.value >= .04 & pdatHEAD$p.value <= .05 & pdatHEAD$operator == "="], breaks = 2))
-print(hist(pdatHEAD$p.value[pdatHEAD$p.value > .04 & pdatHEAD$p.value < .05 & pdatHEAD$operator == "="], breaks = 2))
 
-
-
-
-
-
+###################################
+# Start strong reanalysis 
+###################################
+options(scipen = 5)
+par(mar=c(4, 4, 0, 0))
+hist(pdatHEAD$p.value,
+     xlim = c(0, .05),
+     breaks = 40,
+     main = "",
+     xlab = "P-value",
+     ylab="Frequency",
+     col='white',
+     cex.axis=.8,
+     las=1,
+     cex.lab=.8)
 
 
 
