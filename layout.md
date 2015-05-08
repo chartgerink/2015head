@@ -2,7 +2,6 @@ Introduction.tex
 Data analytic choices.tex
 Sensitivity reanalysis.tex
 Data analytic strategy.tex
-Fig_1_Histogram_of_p__.tex
 Strong reanalysis.tex
 Conclusion.tex
 Acknowledgments.tex
