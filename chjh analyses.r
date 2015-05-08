@@ -247,15 +247,15 @@ for(d in abstractsDF_CHJH$discipline[-1]){
   
   x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
   
-  abstractsDF_CHJH[i,2] <- bin2
-  abstractsDF_CHJH[i,3] <- bin1
+  abstractsDF_CHJH[i,2] <- ifelse(is.na(bin2), 0, bin2)
+  abstractsDF_CHJH[i,3] <- ifelse(is.na(bin1), 0, bin1)
   abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
   
   i <- i + 1
 }
 
-write.csv2(resultsDF_CHJH, 'results/results_CHJH.csv')
-write.csv2(abstractsDF_CHJH, 'results/abstracts_CHJH.csv')
+write.csv(resultsDF_CHJH, 'results/strong re results_CHJH.csv')
+write.csv(abstractsDF_CHJH, 'results/strong re abstracts_CHJH.csv')
 
 ###################################
 # End strong reanalysis 

@@ -1,28 +1,28 @@
-"","discipline","bin1","bin2","pval"
-"1","All",2565,4597,1
-"2","Pharmacology And Pharmaceutical Sciences",14,26,0.981
-"3","Medical And Health Sciences",1536,2774,1
-"4","Chemistry and geology",11,11,0.584
-"5","Neurosciences",32,53,0.992
-"6","Multidisciplinary",442,872,1
-"7","Zoology",NA,NA,NA
-"8","Biochemistry And Cell Biology",NA,NA,NA
-"9","Computer sciences",NA,NA,NA
-"10","Biomedical Engineering",NA,NA,NA
-"11","Psychology and sociology",NA,NA,NA
-"12","Animal, veterinary and agricultural science",NA,NA,NA
-"13","Complementary And Alternative Medicine",NA,NA,NA
-"14","Public Health And Health Services",NA,NA,NA
-"15","Informatics, mathematics and physics",NA,NA,NA
-"16","Education",NA,NA,NA
-"17","Microbiology",NA,NA,NA
-"18","Ecology, evolution and earth sciences",NA,NA,NA
-"19","Biological Sciences",NA,NA,NA
-"20","Immunology",NA,NA,NA
-"21","Genetics",NA,NA,NA
-"22","Physiology",NA,NA,NA
-"23","Plant Biology",NA,NA,NA
-"24","Geography, business and economics",NA,NA,NA
-"25","Dentistry",NA,NA,NA
-"26","Nutrition And Dietetics",NA,NA,NA
-"27","Other",NA,NA,NA
+Discipline,Number of p-values (.04875-.05),Number of p-values (.03875-.04),Binomial test for p-hacking,Proportion for binomial test p-hacking
+All,2565,4597,1,0.358140184
+Pharmacology And Pharmaceutical Sciences,14,26,0.981,0.35
+Medical And Health Sciences,1536,2774,1,0.35638051
+Chemistry and geology,11,11,0.584,0.5
+Neurosciences,32,53,0.992,0.376470588
+Multidisciplinary,442,872,1,0.336377473
+Zoology,NA,NA,NA,#VALUE!
+Biochemistry And Cell Biology,NA,NA,NA,#VALUE!
+Computer sciences,NA,NA,NA,#VALUE!
+Biomedical Engineering,NA,NA,NA,#VALUE!
+Psychology and sociology,NA,NA,NA,#VALUE!
+"Animal, veterinary and agricultural science",NA,NA,NA,#VALUE!
+Complementary And Alternative Medicine,NA,NA,NA,#VALUE!
+Public Health And Health Services,NA,NA,NA,#VALUE!
+"Informatics, mathematics and physics",NA,NA,NA,#VALUE!
+Education,NA,NA,NA,#VALUE!
+Microbiology,NA,NA,NA,#VALUE!
+"Ecology, evolution and earth sciences",NA,NA,NA,#VALUE!
+Biological Sciences,NA,NA,NA,#VALUE!
+Immunology,NA,NA,NA,#VALUE!
+Genetics,NA,NA,NA,#VALUE!
+Physiology,NA,NA,NA,#VALUE!
+Plant Biology,NA,NA,NA,#VALUE!
+"Geography, business and economics",NA,NA,NA,#VALUE!
+Dentistry,NA,NA,NA,#VALUE!
+Nutrition And Dietetics,NA,NA,NA,#VALUE!
+Other,NA,NA,NA,#VALUE!

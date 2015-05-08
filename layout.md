@@ -4,5 +4,3 @@ Sensitivity reanalysis.tex
 Data analytic strategy.tex
 figures/Fig1/Fig1.png
 Strong reanalysis.tex
-Reevaluating_data_analytic_results__.tex
-Alternative_data_analytic_approach__.tex
