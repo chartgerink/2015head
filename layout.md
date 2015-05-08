@@ -6,6 +6,6 @@ figures/Fig1/Fig1.png
 Strong reanalysis.tex
 Conclusion.tex
 Acknowledgments.tex
-section_Supporting_Information_S1_File__.tex
+Supporting Information.tex
 Reevaluating_data_analytic_results__.tex
 Alternative_data_analytic_approach__.tex
