@@ -24,6 +24,10 @@ dim(x)[1]
 length(unique(x$file.name))
 rm(x)
 
+# Number of results and unique sources in the original dataset
+dim(pdatHEAD)[1]
+length(unique(pdatHEAD$file.name))
+
 # Head et al selection 3
 # "only keep papers for which we have >0 results sections (e.g. reviews and commentaries often have 0 results sections)"
 pdatHEAD <- pdatHEAD[which(pdatHEAD$num.results.sections > 0),]
