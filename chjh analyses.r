@@ -106,6 +106,8 @@ binom.test(x = 7298, n = (7298 + 2692), alternative = "greater")
 # Start strong reanalysis 
 ###################################
 options(scipen = 5)
+
+pdf('Fig1.pdf')
 par(mar=c(4, 4, 0, 0))
 hist(pdatHEAD$p.value,
      xlim = c(0, .05),
@@ -117,115 +119,144 @@ hist(pdatHEAD$p.value,
      cex.axis=.8,
      las=1,
      cex.lab=.8)
-
-
-
-
-
-
-# Binwidth .025
-# Ours
-x <- table(cut(pdat$p.value[psel & pdat$p.value <= .05], breaks = 2))
-bin1 <- x[2]
-bin2 <- x[1]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-# Head
-x <- table(cut(pdatHEAD$p.value, breaks = 2))
-bin1 <- x[2]
-bin2 <- x[1]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-
-# Binwidth .00125
-
-# Second decimal place
-png('two and three decimals.png', width = 1200, height = 1200)
-par(mfrow = c(2,2))
-# Our
-bin1 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & psel], breaks=seq(.01,.05,.00125)))[32-0]
-bin2 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & psel], breaks=seq(.01,.05,.00125)))[32-8]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-
-hist(pdat$p.value[psel], breaks = 800, xlim = c(0, .05),
-     main = "(A) Exactly reported p-values",
-     xlab = "P-value (binwidth = .00125)")
-
-# Head
-bin1 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05], breaks=seq(.01,.05,.00125)))[32-0]
-bin2 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05], breaks=seq(.01,.05,.00125)))[32-8]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-
-hist(pdatHEAD$p.value, breaks = 40, xlim = c(0, .05),
-     main = "(B) Exactly reported p-values (Head et al.)",
-     xlab = "P-value (binwidth = .00125)")
-
-# Only 3 decimal places
-# Function retrieved from https://stat.ethz.ch/pipermail/r-help/2012-July/317676.html
-decimalnumcount<-function(x){
-  stopifnot(class(x) == "character")
-  x<-gsub("(.*)(\\.)|([0]*$)", "", x)
-  
-  nchar(x)
-}
-pdatsel <- decimalnumcount(as.character(pdat$p.value)) == 3 & psel
-HEADsel <- decimalnumcount(as.character(pdatHEAD$p.value)) == 3
-
-# Our
-bin1 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & pdatsel], breaks=seq(.01,.05,.00125)))[32-0]
-bin2 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & pdatsel], breaks=seq(.01,.05,.00125)))[32-8]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-
-hist(pdat$p.value[pdatsel],
-     breaks = 800, xlim = c(0, .05), main = "(C) Third decimal place reporting",
-     xlab = "P-value (binwidth = .00125)", ylab = "Frequency")
-
-# Head
-bin1 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05 & HEADsel], breaks=seq(.01,.05,.00125)))[32-0]
-bin2 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05 & HEADsel], breaks=seq(.01,.05,.00125)))[32-8]
-binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-
-hist(pdatHEAD$p.value[HEADsel],
-     breaks = 40, xlim = c(0, .05), main = "(D) Third decimal place reporting (Head et al.)",
-     xlab = "P-value (binwidth = .00125)", ylab = "Frequency")
 dev.off()
 
+# Number of p-values pre-2010.
+x <- table(pdatHEAD$year)
+sum(x[1:(which(names(x) == "2010")-1)])
 
-# Exact per category
-pdf('categories all exact.pdf', onefile = TRUE, width = 11, height = 9.2)
-for(cat in sort(unique(pdat$Category))){
-  catsel <- pdat$Category == cat
-  par(mfrow = c(2,1))
+# Creating the caliper test results for the new bin selection
+## RESULTS SECTION ONLY
+# Create the dataframe to put in
+resultsDF_CHJH <- data.frame(discipline = c("All",
+                          "Pharmacology And Pharmaceutical Sciences",
+                          "Medical And Health Sciences",
+                          "Chemistry and geology",
+                          "Neurosciences",
+                          "Multidisciplinary",
+                          "Zoology",
+                          "Biochemistry And Cell Biology",
+                          "Computer sciences",
+                          "Biomedical Engineering",
+                          "Psychology and sociology",
+                          "Animal, veterinary and agricultural science",
+                          "Complementary And Alternative Medicine",
+                          "Public Health And Health Services",
+                          "Informatics, mathematics and physics",
+                          "Education",
+                          "Microbiology",
+                          "Ecology, evolution and earth sciences",
+                          "Biological Sciences",
+                          "Immunology",
+                          "Genetics",
+                          "Physiology",
+                          "Plant Biology",
+                          "Geography, business and economics",
+                          "Dentistry",
+                          "Nutrition And Dietetics",
+                          "Other"),
+           bin1 = NA,
+           bin2 = NA,
+           pval = NA)
+
+i <- 1
+# All disciplines
+resultsCHJH <- table(cut(pdatHEAD.results$p.value, breaks = 40))
+
+bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
+bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
+
+x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+
+resultsDF_CHJH[i,2] <- bin2
+resultsDF_CHJH[i,3] <- bin1
+resultsDF_CHJH[i,4] <- round(x$p.value, 3)
+
+i <- i + 1
+
+# Per discpline
+for(d in resultsDF_CHJH$discipline[-1]){
+  resultsCHJH <- table(cut(pdatHEAD.results$p.value[as.character(pdatHEAD.results$Category) == d], breaks = 40))
   
-  # All EXACTLY reported values
-  psel <- pdat$operator == "="
+  bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
+  bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
   
-  bin1 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & psel & catsel], breaks=seq(.01,.05,.00125)))[32-0]
-  bin2 <- table(cut(pdat$p.value[pdat$p.value >= .01 & pdat$p.value <= .05 & psel & catsel], breaks=seq(.01,.05,.00125)))[32-8]
-  x <- binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
+  x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
   
-  hist(pdat$p.value[psel & catsel], breaks = 800, xlim = c(0.01, .05),
-       main = sprintf("Exactly reported p-values, %s", cat),
-       xlab = sprintf("P-value, %s", x$p.value))
+  resultsDF_CHJH[i,2] <- bin2
+  resultsDF_CHJH[i,3] <- bin1
+  resultsDF_CHJH[i,4] <- round(x$p.value, 3)
   
-  bin1 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05 & catsel], breaks=seq(.01,.05,.00125)))[32-0]
-  bin2 <- table(cut(pdatHEAD$p.value[pdatHEAD$p.value >= .01 & pdatHEAD$p.value <= .05 & catsel], breaks=seq(.01,.05,.00125)))[32-8]
-  x <- binom.test(bin1, (bin1+bin2), p=.5, alternative = "greater")
-  
-  hist(pdatHEAD$p.value[catsel], breaks = 40, xlim = c(0, .05),
-       main = "(B) Exactly reported p-values (Head et al.)",
-       xlab = sprintf("P-value (binwidth = .00125), %s", x$p.value))
-  
-  # 3 decimal places
-  hist(pdat$p.value[pdatsel & catsel],
-       breaks = 800, xlim = c(0, .05), 
-       main = sprintf("Third decimal place reporting, %s", cat),
-       xlab = "P-value (binwidth = .00125)", ylab = "Frequency")
-  
-  hist(pdatHEAD$p.value[HEADsel & catsel],
-       breaks = 40, xlim = c(0, .05), 
-       main = sprintf("Third decimal place reporting (Head et al.), %s", cat),
-       xlab = "P-value (binwidth = .00125)", ylab = "Frequency")
-  
+  i <- i + 1
 }
-dev.off()
 
+## ABSTRACTS SECTION ONLY
+# Create the dataframe to put in
+abstractsDF_CHJH <- data.frame(discipline = c("All",
+                                              "Pharmacology And Pharmaceutical Sciences",
+                                              "Medical And Health Sciences",
+                                              "Chemistry and geology",
+                                              "Neurosciences",
+                                              "Multidisciplinary",
+                                              "Zoology",
+                                              "Biochemistry And Cell Biology",
+                                              "Computer sciences",
+                                              "Biomedical Engineering",
+                                              "Psychology and sociology",
+                                              "Animal, veterinary and agricultural science",
+                                              "Complementary And Alternative Medicine",
+                                              "Public Health And Health Services",
+                                              "Informatics, mathematics and physics",
+                                              "Education",
+                                              "Microbiology",
+                                              "Ecology, evolution and earth sciences",
+                                              "Biological Sciences",
+                                              "Immunology",
+                                              "Genetics",
+                                              "Physiology",
+                                              "Plant Biology",
+                                              "Geography, business and economics",
+                                              "Dentistry",
+                                              "Nutrition And Dietetics",
+                                              "Other"),
+                               bin1 = NA,
+                               bin2 = NA,
+                               pval = NA)
 
+i <- 1
+# All disciplines
+abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value, breaks = 40))
+
+bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
+bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
+
+x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+
+abstractsDF_CHJH[i,2] <- bin2
+abstractsDF_CHJH[i,3] <- bin1
+abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
+
+i <- i + 1
+
+# Per discpline
+for(d in abstractsDF_CHJH$discipline[-1]){
+  abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value[as.character(pdatHEAD.abstracts$Category) == d], breaks = 40))
+  
+  bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
+  bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
+  
+  x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+  
+  abstractsDF_CHJH[i,2] <- bin2
+  abstractsDF_CHJH[i,3] <- bin1
+  abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
+  
+  i <- i + 1
+}
+
+write.csv2(resultsDF_CHJH, 'results/results_CHJH.csv')
+write.csv2(abstractsDF_CHJH, 'results/abstracts_CHJH.csv')
+
+###################################
+# End strong reanalysis 
+###################################
