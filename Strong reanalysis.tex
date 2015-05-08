@@ -1,7 +1,8 @@
-In order to take into account the two-decimal reporting tendency, I propose a minor, but crucial, adjustment to the data analytic strategy. The application of the Caliper test, where frequencies of two bins are compared, is maintained, but adjusted. Instead of selecting the final two bins, the bins adjacent to round second decimals are chosen. Additionally, the binwidth is adjusted from .005 to .00125 for more precision and comparability with previous research \cite{Masicampo2012, Leggett2013}.
+In order to take into account the two-decimal reporting tendency, I propose a minor, but crucial, adjustment to the data analytic strategy. The application of the Caliper test, where frequencies of two bins are compared, is maintained. However, instead of selecting the final two bins, the bins adjacent to round second decimals are chosen. Additionally, the binwidth is adjusted from .005 to .00125 for more precision and comparability with previous research \cite{Masicampo2012, Leggett2013}. This results in comparing the frequencies for the bins (.04875-.05) and (.03875-.04) in a one-tailed binomial test ($H_0: P \leq .5$).
+
 \begin{table}
 \begin{tabular}{ c c c c }
-     Discipline & Number of p-values between .04875-.05 & Number of p-values between .03875-.04 & Binomial test for p-hacking \\
+     Discipline & Number of p-values between (.04875-.05) & Number of p-values between (.03875-.04) & Binomial test for p-hacking \\
      \hline
     All   & 18664 & 26047 & 1 \\
     Pharmacology And Pharmaceutical Sciences & 133   & 162   & 0.96 \\
@@ -31,5 +32,8 @@ In order to take into account the two-decimal reporting tendency, I propose a mi
     Nutrition And Dietetics & 168   & 261   & 1 \\
     Other & 2     & 2     & 0.688 \\
 \end{tabular}
+\label{tab1}
 \caption{Table 1. Test for p-hacking across disciplines after strong reanalysis; includes only p-values from Results.}
 \end{table}
+
+Results in Table \ref{tab1} indicate that no evidence for p-hacking remains if this data analytic strategy is applied. 
