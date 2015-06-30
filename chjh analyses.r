@@ -1,4 +1,4 @@
-setwd("C:/Users/chjh/Dropbox/projects/2015head")
+setwd(choose.dir())
 source("chjh functions.r")
 
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
