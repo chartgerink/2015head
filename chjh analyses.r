@@ -1,6 +1,8 @@
 setwd(choose.dir())
 source("chjh functions.r")
 
+library(BayesFactor)
+
 pdat <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/p.values.csv", row.names=1)
 journal.categories <- read.csv("FILES_FOR_DRYAD/1. TEXT_MINING/raw_data/journal.categories.csv", row.names=1)
 
@@ -133,35 +135,36 @@ sum(x[1:(which(names(x) == "2010")-1)])
 ## RESULTS SECTION ONLY
 # Create the dataframe to put in
 resultsDF_CHJH <- data.frame(discipline = c("All",
-                          "Pharmacology And Pharmaceutical Sciences",
-                          "Medical And Health Sciences",
-                          "Chemistry and geology",
-                          "Neurosciences",
-                          "Multidisciplinary",
-                          "Zoology",
-                          "Biochemistry And Cell Biology",
-                          "Computer sciences",
-                          "Biomedical Engineering",
-                          "Psychology and sociology",
-                          "Animal, veterinary and agricultural science",
-                          "Complementary And Alternative Medicine",
-                          "Public Health And Health Services",
-                          "Informatics, mathematics and physics",
-                          "Education",
-                          "Microbiology",
-                          "Ecology, evolution and earth sciences",
-                          "Biological Sciences",
-                          "Immunology",
-                          "Genetics",
-                          "Physiology",
-                          "Plant Biology",
-                          "Geography, business and economics",
-                          "Dentistry",
-                          "Nutrition And Dietetics",
-                          "Other"),
-           bin1 = NA,
-           bin2 = NA,
-           pval = NA)
+                                            "Pharmacology And Pharmaceutical Sciences",
+                                            "Medical And Health Sciences",
+                                            "Chemistry and geology",
+                                            "Neurosciences",
+                                            "Multidisciplinary",
+                                            "Zoology",
+                                            "Biochemistry And Cell Biology",
+                                            "Computer sciences",
+                                            "Biomedical Engineering",
+                                            "Psychology and sociology",
+                                            "Animal, veterinary and agricultural science",
+                                            "Complementary And Alternative Medicine",
+                                            "Public Health And Health Services",
+                                            "Informatics, mathematics and physics",
+                                            "Education",
+                                            "Microbiology",
+                                            "Ecology, evolution and earth sciences",
+                                            "Biological Sciences",
+                                            "Immunology",
+                                            "Genetics",
+                                            "Physiology",
+                                            "Plant Biology",
+                                            "Geography, business and economics",
+                                            "Dentistry",
+                                            "Nutrition And Dietetics",
+                                            "Other"),
+                             bin1 = NA,
+                             bin2 = NA,
+                             pval = NA,
+                             bf10 = NA)
 
 i <- 1
 # All disciplines
@@ -171,10 +174,13 @@ bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
 bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
 
 x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
+
 
 resultsDF_CHJH[i,2] <- bin2
 resultsDF_CHJH[i,3] <- bin1
 resultsDF_CHJH[i,4] <- round(x$p.value, 3)
+resultsDF_CHJH[i,5] <- x$bf10
 
 i <- i + 1
 
@@ -186,10 +192,12 @@ for(d in resultsDF_CHJH$discipline[-1]){
   bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
   
   x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
   
   resultsDF_CHJH[i,2] <- bin2
   resultsDF_CHJH[i,3] <- bin1
   resultsDF_CHJH[i,4] <- round(x$p.value, 3)
+  resultsDF_CHJH[i,5] <- x$bf10
   
   i <- i + 1
 }
@@ -225,7 +233,8 @@ abstractsDF_CHJH <- data.frame(discipline = c("All",
                                               "Other"),
                                bin1 = NA,
                                bin2 = NA,
-                               pval = NA)
+                               pval = NA,
+                               bf10 = NA)
 
 i <- 1
 # All disciplines
@@ -235,10 +244,12 @@ bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
 bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
 
 x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
 
 abstractsDF_CHJH[i,2] <- bin2
 abstractsDF_CHJH[i,3] <- bin1
 abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
+abstractsDF_CHJH[i,5] <- x$bf10
 
 i <- i + 1
 
@@ -250,16 +261,18 @@ for(d in abstractsDF_CHJH$discipline[-1]){
   bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
   
   x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
   
   abstractsDF_CHJH[i,2] <- ifelse(is.na(bin2), 0, bin2)
   abstractsDF_CHJH[i,3] <- ifelse(is.na(bin1), 0, bin1)
   abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
+  abstractsDF_CHJH[i,5] <- x$bf10
   
   i <- i + 1
 }
 
-write.csv(resultsDF_CHJH, 'results/strong re results_CHJH.csv')
-write.csv(abstractsDF_CHJH, 'results/strong re abstracts_CHJH.csv')
+write.table(resultsDF_CHJH, 'results/strong re results_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
+write.table(abstractsDF_CHJH, 'results/strong re abstracts_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
 
 ###################################
 # End strong reanalysis 

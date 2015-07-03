@@ -1,28 +1,28 @@
-Discipline,Number of p-values (.04875-.05),Number of p-values (.03875-.04),Binomial test for p-hacking,Proportion for binomial test p-hacking
-All,18664,26047,1,0.417436425
-Pharmacology And Pharmaceutical Sciences,133,162,0.96,0.450847458
-Medical And Health Sciences,7759,11855,1,0.395584786
-Chemistry and geology,92,73,0.08,0.557575758
-Neurosciences,982,1112,0.998,0.46895893
-Multidisciplinary,4911,6802,1,0.419277726
-Zoology,73,82,0.789,0.470967742
-Biochemistry And Cell Biology,288,283,0.434,0.504378284
-Computer sciences,208,310,1,0.401544402
-Biomedical Engineering,134,162,0.954,0.452702703
-Psychology and sociology,507,597,0.997,0.45923913
-"Animal, veterinary and agricultural science",87,105,0.915,0.453125
-Complementary And Alternative Medicine,139,180,0.991,0.435736677
-Public Health And Health Services,651,879,1,0.425490196
-"Informatics, mathematics and physics",25,30,0.791,0.454545455
-Education,62,93,0.995,0.4
-Microbiology,354,517,1,0.406429392
-"Ecology, evolution and earth sciences",335,382,0.964,0.467224547
-Biological Sciences,862,1043,1,0.452493438
-Immunology,220,315,1,0.411214953
-Genetics,341,428,0.999,0.44343303
-Physiology,195,232,0.967,0.456674473
-Plant Biology,40,41,0.588,0.49382716
-"Geography, business and economics",21,23,0.674,0.477272727
-Dentistry,75,78,0.627,0.490196078
-Nutrition And Dietetics,168,261,1,0.391608392
-Other,2,2,0.688,0.5
+"discipline";"bin1";"bin2";"pval";"bf10"
+"All";18664;26047;1;2.07569023327054e-06
+"Pharmacology And Pharmaceutical Sciences";133;162;0.96;0.0552199615128544
+"Medical And Health Sciences";7759;11855;1;7.10199151715679e-05
+"Chemistry and geology";92;73;0.08;1.01347688996961
+"Neurosciences";982;1112;0.998;0.0139342668475462
+"Multidisciplinary";4911;6802;1;0.000755762445444142
+"Zoology";73;82;0.789;0.121121764338712
+"Biochemistry And Cell Biology";288;283;0.434;0.124040887160839
+"Computer sciences";208;310;1;0.0187384100866296
+"Biomedical Engineering";134;162;0.954;0.0565356290792252
+"Psychology and sociology";507;597;0.997;0.0199604171112339
+"Animal, veterinary and agricultural science";87;105;0.915;0.0809414213410309
+"Complementary And Alternative Medicine";139;180;0.991;0.0423460442611267
+"Public Health And Health Services";651;879;1;0.00853258063902979
+"Informatics, mathematics and physics";25;30;0.791;0.204111016609641
+"Education";62;93;0.995;0.0568184652931284
+"Microbiology";354;517;1;0.0118988523656698
+"Ecology, evolution and earth sciences";335;382;0.964;0.0345516172784813
+"Biological Sciences";862;1043;1;0.0104936215017129
+"Immunology";220;315;1;0.0199652449488055
+"Genetics";341;428;0.999;0.0211286181282675
+"Physiology";195;232;0.967;0.0440985755802864
+"Plant Biology";40;41;0.588;0.245395815834877
+"Geography, business and economics";21;23;0.674;0.283665380074432
+"Dentistry";75;78;0.627;0.165395481607195
+"Nutrition And Dietetics";168;261;1;0.0205523546648531
+"Other";2;2;0.688;0.766962718974143
