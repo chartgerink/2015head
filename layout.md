@@ -1,6 +1,7 @@
 Introduction.tex
 Data analytic strategy.tex
 figures/Fig1/Fig1.png
+The_bottom_panel_in_Fig__.tex
 Full reanalysis.tex
 Conclusion.tex
 Acknowledgments.tex
