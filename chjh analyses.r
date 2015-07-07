@@ -75,6 +75,7 @@ pdatHEADabstracts <- trim.levels(pdatHEAD.abstracts)
 
 ###################################
 # Start sensitivity reanalysis 
+# NOT IN PAPER AFTER REVISIONS
 ###################################
 # Only adjustment from original code is the renaming of objects
 # and adjusted the functions to include p <= .05
@@ -110,13 +111,29 @@ binom.test(x = 7298, n = (7298 + 2692), alternative = "greater")
 
 ###################################
 # Start strong reanalysis 
+# REANALYSIS PRESENTED IN PAPER
 ###################################
 options(scipen = 5)
 
-pdf('Fig1.pdf')
-par(mar=c(4, 4, 0, 0))
+sel <- pdatHEAD$p.value > .04 & pdatHEAD$p.value < .05 & !pdatHEAD$p.value == .045
+
+pdf('results/Fig1.pdf', width = 7.5, height = 8.75)
+par(mar=c(4, 4, 0, 0), mfrow = c(2, 1))
+hist(pdatHEAD$p.value[sel],
+     xlim = c(.04, .05),
+#      ylim = c(0, 105000),
+     breaks = 2,
+     main = "",
+     xlab = "P-value",
+     ylab="Frequency",
+     col='white',
+     cex.axis=.8,
+     las=1,
+     cex.lab=.8)
+
 hist(pdatHEAD$p.value,
      xlim = c(0, .05),
+     ylim = c(0, 105000),
      breaks = 40,
      main = "",
      xlab = "P-value",
@@ -174,7 +191,7 @@ bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
 bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
 
 x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
+x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
 
 
 resultsDF_CHJH[i,2] <- bin2
@@ -192,7 +209,7 @@ for(d in resultsDF_CHJH$discipline[-1]){
   bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
   
   x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
+  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
   
   resultsDF_CHJH[i,2] <- bin2
   resultsDF_CHJH[i,3] <- bin1
@@ -244,7 +261,7 @@ bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
 bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
 
 x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
+x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
 
 abstractsDF_CHJH[i,2] <- bin2
 abstractsDF_CHJH[i,3] <- bin1
@@ -261,7 +278,7 @@ for(d in abstractsDF_CHJH$discipline[-1]){
   bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
   
   x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), ))$bf[2]
+  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
   
   abstractsDF_CHJH[i,2] <- ifelse(is.na(bin2), 0, bin2)
   abstractsDF_CHJH[i,3] <- ifelse(is.na(bin1), 0, bin1)
@@ -277,3 +294,6 @@ write.table(abstractsDF_CHJH, 'results/strong re abstracts_CHJH.csv', sep = ";",
 ###################################
 # End strong reanalysis 
 ###################################
+
+bin1 <- sum(pdatHEAD.results$p.value > .045 & pdatHEAD.results$p.value <= .05)
+bin2 <- sum(pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value < .045)
