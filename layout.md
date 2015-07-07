@@ -1,5 +1,4 @@
 Introduction.tex
-Sensitivity reanalysis.tex
 Data analytic strategy.tex
 figures/Fig1/Fig1.png
 Full reanalysis.tex
