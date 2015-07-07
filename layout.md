@@ -2,7 +2,7 @@ Introduction.tex
 Data analytic strategy.tex
 figures/Fig1/Fig1.png
 Data analytic strategy [cont].tex
-Full reanalysis.tex
+Reanalysis.tex
 Conclusion.tex
 Acknowledgments.tex
 Supporting Information.tex
