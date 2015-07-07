@@ -178,26 +178,68 @@ resultsDF_CHJH <- data.frame(discipline = c("All",
                                             "Dentistry",
                                             "Nutrition And Dietetics",
                                             "Other"),
-                             bin1 = NA,
-                             bin2 = NA,
-                             pval = NA,
-                             bf10 = NA)
+                             bin1.00125 = NA,
+                             bin2.00125 = NA,
+                             prop.00125 = NA,
+                             pval.00125 = NA,
+                             bf10.00125 = NA,
+                             bin1.005 = NA,
+                             bin2.005 = NA,
+                             prop.005 = NA,
+                             pval.005 = NA,
+                             bf10.005 = NA,
+                             bin1.01 = NA,
+                             bin2.01 = NA,
+                             prop.01 = NA,
+                             pval.01 = NA,
+                             bf10.01 = NA)
 
 i <- 1
 # All disciplines
 resultsCHJH <- table(cut(pdatHEAD.results$p.value, breaks = 40))
 
-bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
-bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
+bin1.00125 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
+bin2.00125 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
 
-x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+x <- binom.test(x = bin2.00125, n = (bin1.00125 + bin2.00125), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.00125, N = (bin1.00125 + bin2.00125), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
 
 
-resultsDF_CHJH[i,2] <- bin2
-resultsDF_CHJH[i,3] <- bin1
-resultsDF_CHJH[i,4] <- round(x$p.value, 3)
-resultsDF_CHJH[i,5] <- x$bf10
+resultsDF_CHJH[i,2] <- bin1.00125
+resultsDF_CHJH[i,3] <- bin2.00125
+resultsDF_CHJH[i,4] <- x$estimate
+resultsDF_CHJH[i,5] <- round(x$p.value, 3)
+resultsDF_CHJH[i,6] <- x$bf10
+
+resultsCHJH <- table(cut(pdatHEAD.results$p.value, breaks = 10))
+
+bin1.005 <- resultsCHJH[which(names(resultsCHJH) == "(0.035,0.04]")]
+bin2.005 <- resultsCHJH[which(names(resultsCHJH) == "(0.045,0.0501]")]
+
+x <- binom.test(x = bin2.005, n = (bin1.005 + bin2.005), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.005, N = (bin1.005 + bin2.005), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+
+
+resultsDF_CHJH[i,7] <- bin1.005
+resultsDF_CHJH[i,8] <- bin2.005
+resultsDF_CHJH[i,9] <- x$estimate
+resultsDF_CHJH[i,10] <- round(x$p.value, 3)
+resultsDF_CHJH[i,11] <- x$bf10
+
+resultsCHJH <- table(cut(pdatHEAD.results$p.value, breaks = 5))
+
+bin1.01 <- resultsCHJH[which(names(resultsCHJH) == "(0.03,0.04]")]
+bin2.01 <- resultsCHJH[which(names(resultsCHJH) == "(0.04,0.0501]")]
+
+x <- binom.test(x = bin2.01, n = (bin1.01 + bin2.01), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.01, N = (bin1.01 + bin2.01), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+
+
+resultsDF_CHJH[i,12] <- bin1.01
+resultsDF_CHJH[i,13] <- bin2.01
+resultsDF_CHJH[i,14] <- x$estimate
+resultsDF_CHJH[i,15] <- round(x$p.value, 3)
+resultsDF_CHJH[i,16] <- x$bf10
 
 i <- i + 1
 
@@ -205,16 +247,48 @@ i <- i + 1
 for(d in resultsDF_CHJH$discipline[-1]){
   resultsCHJH <- table(cut(pdatHEAD.results$p.value[as.character(pdatHEAD.results$Category) == d], breaks = 40))
   
-  bin1 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
-  bin2 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
+  bin1.00125 <- resultsCHJH[which(names(resultsCHJH) == "(0.0387,0.04]")]
+  bin2.00125 <- resultsCHJH[which(names(resultsCHJH) == "(0.0488,0.0501]")]
   
-  x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  x <- binom.test(x = bin2.00125, n = (bin1.00125 + bin2.00125), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.00125, N = (bin1.00125 + bin2.00125), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
   
-  resultsDF_CHJH[i,2] <- bin2
-  resultsDF_CHJH[i,3] <- bin1
-  resultsDF_CHJH[i,4] <- round(x$p.value, 3)
-  resultsDF_CHJH[i,5] <- x$bf10
+  
+  resultsDF_CHJH[i,2] <- bin1.00125
+  resultsDF_CHJH[i,3] <- bin2.00125
+  resultsDF_CHJH[i,4] <- x$estimate
+  resultsDF_CHJH[i,5] <- round(x$p.value, 3)
+  resultsDF_CHJH[i,6] <- x$bf10
+  
+  resultsCHJH <- table(cut(pdatHEAD.results$p.value[as.character(pdatHEAD.results$Category) == d], breaks = 10))
+  
+  bin1.005 <- resultsCHJH[which(names(resultsCHJH) == "(0.035,0.04]")]
+  bin2.005 <- resultsCHJH[which(names(resultsCHJH) == "(0.045,0.0501]")]
+  
+  x <- binom.test(x = bin2.005, n = (bin1.005 + bin2.005), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.005, N = (bin1.005 + bin2.005), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  
+  
+  resultsDF_CHJH[i,7] <- bin1.005
+  resultsDF_CHJH[i,8] <- bin2.005
+  resultsDF_CHJH[i,9] <- x$estimate
+  resultsDF_CHJH[i,10] <- round(x$p.value, 3)
+  resultsDF_CHJH[i,11] <- x$bf10
+  
+  resultsCHJH <- table(cut(pdatHEAD.results$p.value[as.character(pdatHEAD.results$Category) == d], breaks = 5))
+  
+  bin1.01 <- resultsCHJH[which(names(resultsCHJH) == "(0.03,0.04]")]
+  bin2.01 <- resultsCHJH[which(names(resultsCHJH) == "(0.04,0.0501]")]
+  
+  x <- binom.test(x = bin2.01, n = (bin1.01 + bin2.01), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.01, N = (bin1.01 + bin2.01), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  
+  
+  resultsDF_CHJH[i,12] <- bin1.01
+  resultsDF_CHJH[i,13] <- bin2.01
+  resultsDF_CHJH[i,14] <- x$estimate
+  resultsDF_CHJH[i,15] <- round(x$p.value, 3)
+  resultsDF_CHJH[i,16] <- x$bf10
   
   i <- i + 1
 }
@@ -248,25 +322,68 @@ abstractsDF_CHJH <- data.frame(discipline = c("All",
                                               "Dentistry",
                                               "Nutrition And Dietetics",
                                               "Other"),
-                               bin1 = NA,
-                               bin2 = NA,
-                               pval = NA,
-                               bf10 = NA)
+                               bin1.00125 = NA,
+                               bin2.00125 = NA,
+                               prop.00125 = NA,
+                               pval.00125 = NA,
+                               bf10.00125 = NA,
+                               bin1.005 = NA,
+                               bin2.005 = NA,
+                               prop.005 = NA,
+                               pval.005 = NA,
+                               bf10.005 = NA,
+                               bin1.01 = NA,
+                               bin2.01 = NA,
+                               prop.01 = NA,
+                               pval.01 = NA,
+                               bf10.01 = NA)
 
 i <- 1
 # All disciplines
 abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value, breaks = 40))
 
-bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
-bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
+bin1.00125 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
+bin2.00125 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
 
-x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+x <- binom.test(x = bin2.00125, n = (bin1.00125 + bin2.00125), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.00125, N = (bin1.00125 + bin2.00125), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
 
-abstractsDF_CHJH[i,2] <- bin2
-abstractsDF_CHJH[i,3] <- bin1
-abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
-abstractsDF_CHJH[i,5] <- x$bf10
+
+abstractsDF_CHJH[i,2] <- bin1.00125
+abstractsDF_CHJH[i,3] <- bin2.00125
+abstractsDF_CHJH[i,4] <- x$estimate
+abstractsDF_CHJH[i,5] <- round(x$p.value, 3)
+abstractsDF_CHJH[i,6] <- x$bf10
+
+abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value, breaks = 10))
+
+bin1.005 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.035,0.04]")]
+bin2.005 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.045,0.0501]")]
+
+x <- binom.test(x = bin2.005, n = (bin1.005 + bin2.005), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.005, N = (bin1.005 + bin2.005), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+
+
+abstractsDF_CHJH[i,7] <- bin1.005
+abstractsDF_CHJH[i,8] <- bin2.005
+abstractsDF_CHJH[i,9] <- x$estimate
+abstractsDF_CHJH[i,10] <- round(x$p.value, 3)
+abstractsDF_CHJH[i,11] <- x$bf10
+
+abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value, breaks = 5))
+
+bin1.01 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.03,0.04]")]
+bin2.01 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.04,0.0501]")]
+
+x <- binom.test(x = bin2.01, n = (bin1.01 + bin2.01), alternative = "greater")
+x$bf10 <- as.data.frame(proportionBF(y = bin2.01, N = (bin1.01 + bin2.01), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+
+
+abstractsDF_CHJH[i,12] <- bin1.01
+abstractsDF_CHJH[i,13] <- bin2.01
+abstractsDF_CHJH[i,14] <- x$estimate
+abstractsDF_CHJH[i,15] <- round(x$p.value, 3)
+abstractsDF_CHJH[i,16] <- x$bf10
 
 i <- i + 1
 
@@ -274,26 +391,61 @@ i <- i + 1
 for(d in abstractsDF_CHJH$discipline[-1]){
   abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value[as.character(pdatHEAD.abstracts$Category) == d], breaks = 40))
   
-  bin1 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
-  bin2 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
+  bin1.00125 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0387,0.04]")]
+  bin2.00125 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.0488,0.0501]")]
   
-  x <- binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
-  x$bf10 <- as.data.frame(proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  x <- binom.test(x = bin2.00125, n = (bin1.00125 + bin2.00125), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.00125, N = (bin1.00125 + bin2.00125), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
   
-  abstractsDF_CHJH[i,2] <- ifelse(is.na(bin2), 0, bin2)
-  abstractsDF_CHJH[i,3] <- ifelse(is.na(bin1), 0, bin1)
-  abstractsDF_CHJH[i,4] <- round(x$p.value, 3)
-  abstractsDF_CHJH[i,5] <- x$bf10
+  
+  abstractsDF_CHJH[i,2] <- bin1.00125
+  abstractsDF_CHJH[i,3] <- bin2.00125
+  abstractsDF_CHJH[i,4] <- x$estimate
+  abstractsDF_CHJH[i,5] <- round(x$p.value, 3)
+  abstractsDF_CHJH[i,6] <- x$bf10
+  
+  abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value[as.character(pdatHEAD.abstracts$Category) == d], breaks = 10))
+  
+  bin1.005 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.035,0.04]")]
+  bin2.005 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.045,0.0501]")]
+  
+  x <- binom.test(x = bin2.005, n = (bin1.005 + bin2.005), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.005, N = (bin1.005 + bin2.005), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  
+  
+  abstractsDF_CHJH[i,7] <- bin1.005
+  abstractsDF_CHJH[i,8] <- bin2.005
+  abstractsDF_CHJH[i,9] <- x$estimate
+  abstractsDF_CHJH[i,10] <- round(x$p.value, 3)
+  abstractsDF_CHJH[i,11] <- x$bf10
+  
+  abstractsCHJH <- table(cut(pdatHEAD.abstracts$p.value[as.character(pdatHEAD.abstracts$Category) == d], breaks = 5))
+  
+  bin1.01 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.03,0.04]")]
+  bin2.01 <- abstractsCHJH[which(names(abstractsCHJH) == "(0.04,0.0501]")]
+  
+  x <- binom.test(x = bin2.01, n = (bin1.01 + bin2.01), alternative = "greater")
+  x$bf10 <- as.data.frame(proportionBF(y = bin2.01, N = (bin1.01 + bin2.01), p = .5, nullInterval = c(0, .5), rscale = 1))$bf[2]
+  
+  
+  abstractsDF_CHJH[i,12] <- bin1.01
+  abstractsDF_CHJH[i,13] <- bin2.01
+  abstractsDF_CHJH[i,14] <- x$estimate
+  abstractsDF_CHJH[i,15] <- round(x$p.value, 3)
+  abstractsDF_CHJH[i,16] <- x$bf10
   
   i <- i + 1
 }
 
-write.table(resultsDF_CHJH, 'results/strong re results_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
-write.table(abstractsDF_CHJH, 'results/strong re abstracts_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
+write.table(resultsDF_CHJH, 'results/reanalysis results section_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
+write.table(abstractsDF_CHJH, 'results/reanalysis abstracts section_CHJH.csv', sep = ";", dec = ".", row.names = FALSE)
 
 ###################################
 # End strong reanalysis 
 ###################################
 
-bin1 <- sum(pdatHEAD.results$p.value > .045 & pdatHEAD.results$p.value <= .05)
-bin2 <- sum(pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value < .045)
+bin2 <- sum(pdatHEAD.results$p.value > .045 & pdatHEAD.results$p.value <= .05)
+bin1 <- sum(pdatHEAD.results$p.value >= .04 & pdatHEAD.results$p.value < .045)
+
+binom.test(x = bin2, n = (bin1 + bin2), alternative = "greater")
+proportionBF(y = bin2, N = (bin1 + bin2), p = .5, nullInterval = c(0, .5), rscale = 1)
