@@ -5,21 +5,22 @@ Results of the reanalysis indicate that no evidence for left-skew p-hacking rema
     \begin{tabular}{cccc}
               &       & Abstracts & Results \\
               \hline
-    \multicolumn{1}{l}{\multirow{5}[0]{*}{Binwidth = .00125}} & (.03875-.04) & 4597  & 26047 \\
-    \multicolumn{1}{l}{} & (.04875-.05) & 2565  & 18664 \\
-    \multicolumn{1}{l}{} & $Prop.$ & 0.358 & 0.417 \\
-    \multicolumn{1}{l}{} & $p$     & >.999 & >.999 \\
-    \multicolumn{1}{l}{} & $BF_{10}$  & <.001 & <.001 \\
-    \multicolumn{1}{l}{\multirow{5}[0]{*}{Binwidth = .005}} & (.035-.04) & 6641  & 38537 \\
-    \multicolumn{1}{l}{} & (.045-.05) & 4485  & 30406 \\
-    \multicolumn{1}{l}{} & $Prop.$ & 0.403 & 0.441 \\
-    \multicolumn{1}{l}{} & $p$     & >.999 & >.999 \\
-    \multicolumn{1}{l}{} & $BF_{10}$  & <.001 & <.001 \\
-    \multicolumn{1}{l}{\multirow{5}[0]{*}{Binwidth = .01}} & (.03-.04) & 9885  & 58809 \\
-    \multicolumn{1}{l}{} & (.04-.05) & 7250  & 47755 \\
-    \multicolumn{1}{l}{} & $Prop.$ & 0.423 & 0.448 \\
-    \multicolumn{1}{l}{} & $p$     & >.999 & >.999 \\
-    \multicolumn{1}{l}{} & $BF_{10}$  & <.001 & <.001 \\
+      Binwidth = .00125 & (.03875-.04) & 4597  & 26047 \\
+          & (.04875-.05) & 2565  & 18664 \\
+          & Prop. & 0.358 & 0.417 \\
+          & p     & >.999 & >.999 \\
+          & BF10  & <.001 & <.001 \\
+    Binwidth = .005 & (.035-.04) & 6641  & 38537 \\
+          & (.045-.05) & 4485  & 30406 \\
+          & Prop. & 0.403 & 0.441 \\
+          & p     & >.999 & >.999 \\
+          & BF10  & <.001 & <.001 \\
+    Binwidth = .01 & (.03-.04) & 9885  & 58809 \\
+          & (.04-.05) & 7250  & 47755 \\
+          & Prop. & 0.423 & 0.448 \\
+          & p     & >.999 & >.999 \\
+          & BF10  & <.001 & <.001 \\
+
     \end{tabular}
     \caption{Table 1. Results of reanalysis across various binwidths (i.e., .00125, .005, .01).} 
 \end{table}
@@ -27,3 +28,5 @@ Results of the reanalysis indicate that no evidence for left-skew p-hacking rema
 A limitation of selecting the bins just below .04 and .05 is that these bins are non-adjacent and therefore might be less sensitive to detecting left-skew p-hacking. In light of this limitation I ran the original analysis but included the second decimal, which resulted in the comparison of $.04\leq p<.045$ versus $.045<p\leq.05$. This analysis also yielded no evidence for left-skew p-hacking, $Prop.=.457,p>.999,BF_{10}<.001$.
 
 A final limitation regards the selection of only exactly reported p-values. This might have distorted the p-value distribution due to minor rounding biases. Previous research has indicated that p-values are somewhat more likely to be rounded to .05 rather than to .04 (Krawczyk, 2015). Selecting only exactly reported p-values might therefore cause an underrepresentation of .05 values.
+  
+  
