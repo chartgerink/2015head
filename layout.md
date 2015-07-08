@@ -1,5 +1,5 @@
 Introduction.tex
-Data analytic strategy.tex
+Reanalytic strategy.tex
 figures/Fig1/Fig1.png
 Data analytic strategy [cont].tex
 Reanalysis.tex
