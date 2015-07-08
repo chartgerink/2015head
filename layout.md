@@ -2,7 +2,7 @@ Introduction.tex
 Reanalytic strategy.tex
 figures/Fig1/Fig1.png
 Reanalytic strategy [cont].tex
-Reanalysis.tex
+Reanalysis results.tex
 Discussion and Conclusion.tex
 Acknowledgments.tex
 Supporting Information.tex
