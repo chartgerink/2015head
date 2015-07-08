@@ -3,7 +3,7 @@ Data analytic strategy.tex
 figures/Fig1/Fig1.png
 Data analytic strategy [cont].tex
 Reanalysis.tex
-Conclusion.tex
+Discussion and Conclusion.tex
 Acknowledgments.tex
 Supporting Information.tex
 Reevaluating_data_analytic_results__.tex
